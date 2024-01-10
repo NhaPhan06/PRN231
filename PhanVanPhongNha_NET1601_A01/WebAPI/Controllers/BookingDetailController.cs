@@ -11,7 +11,7 @@ using DataAccess;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]/[action]")]
     [ApiController]
     public class BookingDetailController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/BookingDetail
-        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.HttpGet]
         public async Task<ActionResult<List<BookingDetail>>> GetBookingDetails()
         {
             var result  = await _bookingDetail.GetBookingDetails();

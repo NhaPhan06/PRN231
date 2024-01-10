@@ -13,9 +13,20 @@ public class BookingReservationRepository : IBookingReservationRepository
         _context = new FUMiniHotelManagementContext();
     }
 
-    public async Task<IEnumerable<BookingReservation>> GetAll()
+    public async Task<List<BookingReservation>> GetAll()
     {
         return await _context.BookingReservations.Include(br => br.BookingDetails).ToListAsync();
+    }
+
+    public async Task<List<BookingReservation>> GetListByCustomerID(int id)
+    {
+        return await _context.BookingReservations.Include(detail => detail.BookingDetails)
+            .Where(r => r.CustomerId == id).OrderByDescending(src => src.BookingDate).ToListAsync();
+    }
+
+    public async Task<int> Count()
+    {
+        return  await _context.BookingReservations.CountAsync();
     }
 
     public async Task<BookingReservation> Get(int id)

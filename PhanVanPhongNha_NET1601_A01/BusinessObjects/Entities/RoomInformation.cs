@@ -17,7 +17,6 @@ namespace BusinessObjects.Entities
         public int RoomTypeId { get; set; }
         public byte? RoomStatus { get; set; }
         public decimal? RoomPricePerDay { get; set; }
-
         public virtual RoomType RoomType { get; set; } = null!;
         public virtual ICollection<BookingDetail> BookingDetails { get; set; }
     }

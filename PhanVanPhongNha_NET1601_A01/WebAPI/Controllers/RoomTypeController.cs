@@ -10,7 +10,7 @@ using DataAccess;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class RoomTypeController : ControllerBase
     {

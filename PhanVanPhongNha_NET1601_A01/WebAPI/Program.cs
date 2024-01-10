@@ -1,12 +1,27 @@
+using System.Configuration;
+using BussinessLogic;
+using BussinessLogic.Configuration;
 using BussinessLogic.IService;
+using BussinessLogic.Middleware;
 using BussinessLogic.Service;
 using DataAccess.IRepository;
 using DataAccess.Repository;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", false, true)
+    .Build();
+
+builder.Services.AddSingleton<GlobalExceptionMiddleware>();
+
+builder.Services.Configure<AdminAccount>(configuration.GetSection("AdminAccount"));
+
+builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
 builder.Services.AddScoped<IBookingDetailService,BookingDetailService>();
 builder.Services.AddScoped<IBookingReservationService,BookingReservationService>();
 builder.Services.AddScoped<ICustomerService,CustomerService>();
@@ -18,7 +33,14 @@ builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
 builder.Services.AddScoped<IRoomInformationRepository,RoomInformationRepository>();
 builder.Services.AddScoped<IRoomTypeRepository,RoomTypeRepository>();
 
-builder.Services.AddControllers();
+//AUTOMAPPER
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+}).AddXmlDataContractSerializerFormatters().AddMvcOptions(c => c.OutputFormatters.Add(new  StreamOutputFormatter()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,6 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

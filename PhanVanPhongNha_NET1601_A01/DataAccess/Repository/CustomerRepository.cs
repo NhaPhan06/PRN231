@@ -13,9 +13,20 @@ public class CustomerRepository : ICustomerRepository
         _context = new FUMiniHotelManagementContext();
     }
 
-    public async Task<IEnumerable<Customer>> GetAll()
+    public async Task<List<Customer>> GetAll()
     {
-        return await _context.Customers.Include(c => c.BookingReservations).ToListAsync();
+        return await _context.Customers.ToListAsync();
+    }
+
+    public async Task<bool> CheckLogin(string email, string password)
+    {
+        var check = await _context.Customers.Where(c => c.EmailAddress == email && c.Password == password).CountAsync();
+        if (check == 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public async Task<Customer> Get(int id)
@@ -23,22 +34,24 @@ public class CustomerRepository : ICustomerRepository
         return await _context.Customers.Include(c => c.BookingReservations).FirstOrDefaultAsync(c => c.CustomerId == id);
     }
 
-    public void Add(Customer customer)
+    public async Task<Customer> Add(Customer customer)
     {
         _context.Customers.Add(customer);
         _context.SaveChanges();
+        return await _context.Customers.FirstOrDefaultAsync(c => c.EmailAddress == customer.EmailAddress);
     }
 
-    public void Update(Customer customer)
+    public async Task<Customer> Update(Customer customer)
     {
-        _context.Entry(customer).State = EntityState.Modified;
+        _context.Customers.Update(customer);
         _context.SaveChanges();
+        return await _context.Customers.FirstOrDefaultAsync(c => c.EmailAddress == customer.EmailAddress);
     }
 
     public void Delete(int id)
     {
         var customer = _context.Customers.Find(id);
-        _context.Customers.Remove(customer);
+        customer.CustomerStatus = 0;
         _context.SaveChanges();
     }
 }

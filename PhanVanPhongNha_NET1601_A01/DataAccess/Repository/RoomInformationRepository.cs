@@ -23,6 +23,13 @@ public class RoomInformationRepository : IRoomInformationRepository
         return await _context.RoomInformations.Include(ri => ri.BookingDetails).FirstOrDefaultAsync(ri => ri.RoomId == id);
     }
 
+    public async Task<List<RoomInformation>> GetRoomToBooking(int id, DateTime start, DateTime end)
+    {
+        return _context.RoomInformations.Where(r => r.RoomTypeId == id && !r.BookingDetails.Any(b => (b.StartDate <= end && b.EndDate >= start)))
+            .ToList();
+    }
+    
+    
     public void Add(RoomInformation roomInformation)
     {
         _context.RoomInformations.Add(roomInformation);

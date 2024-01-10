@@ -4,9 +4,10 @@ namespace DataAccess.IRepository;
 
 public interface ICustomerRepository
 {
-    Task<IEnumerable<Customer>> GetAll();
+    Task<List<Customer>> GetAll();
+    Task<bool> CheckLogin(String email, String password);
     Task<Customer> Get(int id);
-    void Add(Customer customer);
-    void Update(Customer customer);
+    Task<Customer> Add(Customer customer);
+    Task<Customer> Update(Customer customer);
     void Delete(int id);
 }
