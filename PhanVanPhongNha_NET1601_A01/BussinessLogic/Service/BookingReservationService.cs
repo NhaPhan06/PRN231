@@ -72,8 +72,13 @@ public class BookingReservationService : IBookingReservationService
         return reservation;
     }
 
-    public Task<BookingReservation> UpdateBookingReservation(int id, BookingReservation bookingReservation)
+    public Task<BookingReservation> UpdateBookingReservation(BookingReservation bookingReservation)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task DeleteBookingReservation(int id)
+    {
+        _reservationRepository.Delete(id);
     }
 }

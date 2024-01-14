@@ -10,5 +10,6 @@ public interface IRoomInformationService
     public Task<RoomInformation> GetRoomInformation(int id);
     public Task<RoomInformation> UpdateRoomInformation(RoomInformation roomInformation);
     public Task<RoomInformation> CreateRoomInformation(RoomInformation roomInformation);
-
+    public Task Delete(int id);
+    
 }

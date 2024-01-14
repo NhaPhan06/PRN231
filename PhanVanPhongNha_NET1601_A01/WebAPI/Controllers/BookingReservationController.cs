@@ -46,40 +46,16 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(bookingReservation);
         }
 
-        // // PUT: api/BookingReservation/5
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutBookingReservation(int id, BookingReservation bookingReservation)
-        // {
-        //     if (id != bookingReservation.BookingReservationId)
-        //     {
-        //         return BadRequest();
-        //     }
-        //
-        //     _context.Entry(bookingReservation).State = EntityState.Modified;
-        //
-        //     try
-        //     {
-        //         await _context.SaveChangesAsync();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!BookingReservationExists(id))
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-        //
-        //     return NoContent();
-        // }
+        // PUT: api/BookingReservation/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<ActionResult<BookingReservation>> PutBookingReservation(BookingReservation bookingReservation)
+        {
+            return Ok(await _bookingReservationService.UpdateBookingReservation(bookingReservation));
+        }
 
         // POST: api/BookingReservation
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -90,29 +66,18 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        // // DELETE: api/BookingReservation/5
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> DeleteBookingReservation(int id)
-        // {
-        //     if (_context.BookingReservations == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     var bookingReservation = await _context.BookingReservations.FindAsync(id);
-        //     if (bookingReservation == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     _context.BookingReservations.Remove(bookingReservation);
-        //     await _context.SaveChangesAsync();
-        //
-        //     return NoContent();
-        // }
-        //
-        // private bool BookingReservationExists(int id)
-        // {
-        //     return (_context.BookingReservations?.Any(e => e.BookingReservationId == id)).GetValueOrDefault();
-        // }
+        // DELETE: api/BookingReservation/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBookingReservation(int id)
+        {
+            var bookingReservation = await _bookingReservationService.GetBookingReservation(id);
+            if (bookingReservation == null)
+            {
+                return NotFound();
+            }
+            _bookingReservationService.DeleteBookingReservation(id);
+            return NoContent();
+        }
+        
     }
 }

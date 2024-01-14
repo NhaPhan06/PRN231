@@ -17,7 +17,7 @@ public class BookingReservationRepository : IBookingReservationRepository
 
     public async Task<List<BookingReservation>> GetAll()
     {
-        return await _context.BookingReservations.Include(br => br.BookingDetails).ToListAsync();
+        return await _context.BookingReservations.Include(br => br.Customer).ToListAsync();
     }
 
     public async Task<List<BookingReservation>> GetListByCustomerID(int id)

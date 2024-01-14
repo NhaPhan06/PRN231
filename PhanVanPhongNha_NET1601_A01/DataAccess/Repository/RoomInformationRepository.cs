@@ -17,7 +17,7 @@ public class RoomInformationRepository : IRoomInformationRepository
 
     public async Task<List<RoomInformation>> GetAll()
     {
-        return await _context.RoomInformations.Include(ri => ri.BookingDetails).ToListAsync();
+        return await _context.RoomInformations.ToListAsync();
     }
 
     public async Task<RoomInformation> Get(int id)

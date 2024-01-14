@@ -11,5 +11,6 @@ public interface IBookingReservationService
     public Task<BookingReservation> GetBookingReservation(int id);
     public Task<List<ReservationResponse>> GetBookingReservationByCustomerId(int id);
     public Task<BookingReservation> CreateBookingReservation(BookingRequest bookingRequest);
-    public Task<BookingReservation> UpdateBookingReservation(int id, BookingReservation bookingReservation);
+    public Task<BookingReservation> UpdateBookingReservation(BookingReservation bookingReservation);
+    public Task DeleteBookingReservation(int id);
 }

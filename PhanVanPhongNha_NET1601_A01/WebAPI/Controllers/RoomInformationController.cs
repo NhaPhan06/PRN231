@@ -35,96 +35,42 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        /*
-        // GET: api/RoomInformation/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RoomInformation>> GetRoomInformation(int id)
-        {
-          if (_context.RoomInformations == null)
-          {
-              return NotFound();
-          }
-            var roomInformation = await _context.RoomInformations.FindAsync(id);
+         
+         // GET: api/RoomInformation/5
+         [HttpGet("{id}")]
+         public async Task<ActionResult<RoomInformation>> GetRoomInformation(int id)
+         {
+             var roomInformation = await _informationService.GetRoomInformation(id);
+             if (roomInformation == null)
+             {
+                 return NotFound();
+             }
 
-            if (roomInformation == null)
-            {
-                return NotFound();
-            }
+             return roomInformation;
+         }
+         
+         // PUT: api/RoomInformation/5
+         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+         [HttpPut("{id}")]
+         public async Task<IActionResult> UpdateRoomInformation(RoomInformation roomInformation)
+         {
+             return Ok(await _informationService.UpdateRoomInformation(roomInformation));
+         }
 
-            return roomInformation;
-        }
+         // POST: api/RoomInformation
+         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+         [HttpPost]
+         public async Task<ActionResult<RoomInformation>> CreateRoomInformation(RoomInformation roomInformation)
+         {
+             return Ok(await _informationService.CreateRoomInformation(roomInformation));
+         }
 
-        */
-        /*
-        // PUT: api/RoomInformation/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoomInformation(int id, RoomInformation roomInformation)
-        {
-            if (id != roomInformation.RoomId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(roomInformation).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoomInformationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/RoomInformation
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<RoomInformation>> PostRoomInformation(RoomInformation roomInformation)
-        {
-          if (_context.RoomInformations == null)
-          {
-              return Problem("Entity set 'FUMiniHotelManagementContext.RoomInformations'  is null.");
-          }
-            _context.RoomInformations.Add(roomInformation);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRoomInformation", new { id = roomInformation.RoomId }, roomInformation);
-        }
-
-        // DELETE: api/RoomInformation/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRoomInformation(int id)
-        {
-            if (_context.RoomInformations == null)
-            {
-                return NotFound();
-            }
-            var roomInformation = await _context.RoomInformations.FindAsync(id);
-            if (roomInformation == null)
-            {
-                return NotFound();
-            }
-
-            _context.RoomInformations.Remove(roomInformation);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool RoomInformationExists(int id)
-        {
-            return (_context.RoomInformations?.Any(e => e.RoomId == id)).GetValueOrDefault();
-        }*/
+         // DELETE: api/RoomInformation/5
+         [HttpDelete("{id}")]
+         public async Task<IActionResult> DeleteRoomInformation(int id)
+         {
+             await _informationService.Delete(id);
+             return NoContent();
+         }
     }
 }

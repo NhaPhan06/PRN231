@@ -31,4 +31,9 @@ public class RoomInformationService : IRoomInformationService
     {
         return await _informationRepository.Add(roomInformation);
     }
+
+    public async Task Delete(int id)
+    {
+        _informationRepository.Delete(id);
+    }
 }
