@@ -1,4 +1,6 @@
-using BusinessObjects.Entities;
+
+
+using ModelsLayer.BusinessObjects;
 
 namespace DataAccess.IRepository;
 

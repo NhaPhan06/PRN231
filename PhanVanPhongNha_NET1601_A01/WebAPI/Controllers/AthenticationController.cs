@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BusinessObjects.DTOS.Request;
+using ModelsLayer.DTOS.Request;
 using BussinessLogic.IService;
 using BussinessLogic.Service;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<String>> GetBookingDetails(LoginRequest request)
+        public async Task<ActionResult<String>> Login(LoginRequest request)
         {
             var result  = await _authenticationService.Login(request);
             if (result == null)

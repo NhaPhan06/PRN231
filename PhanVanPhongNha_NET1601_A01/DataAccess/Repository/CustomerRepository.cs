@@ -1,6 +1,8 @@
-using BusinessObjects.Entities;
+
+
 using DataAccess.IRepository;
 using Microsoft.EntityFrameworkCore;
+using ModelsLayer.BusinessObjects;
 
 namespace DataAccess.Repository;
 
@@ -52,6 +54,7 @@ public class CustomerRepository : ICustomerRepository
     {
         var customer = _context.Customers.Find(id);
         customer.CustomerStatus = 0;
+        _context.Customers.Update(customer);
         _context.SaveChanges();
     }
 }

@@ -1,4 +1,4 @@
-using BusinessObjects.Entities;
+using ModelsLayer.BusinessObjects;
 
 namespace BussinessLogic.IService;
 

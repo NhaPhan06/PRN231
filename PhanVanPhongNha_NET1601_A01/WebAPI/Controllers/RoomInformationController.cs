@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BussinessLogic.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BusinessObjects.Entities;
+
 using DataAccess;
+using ModelsLayer.BusinessObjects;
 
 namespace WebAPI.Controllers
 {
@@ -14,24 +16,26 @@ namespace WebAPI.Controllers
     [ApiController]
     public class RoomInformationController : ControllerBase
     {
-        private readonly FUMiniHotelManagementContext _context;
+        private readonly IRoomInformationService _informationService;
 
-        public RoomInformationController(FUMiniHotelManagementContext context)
+        public RoomInformationController(IRoomInformationService informationService)
         {
-            _context = context;
+            _informationService = informationService;
         }
 
         // GET: api/RoomInformation
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoomInformation>>> GetRoomInformations()
+        public async Task<ActionResult<IList<RoomInformation>>> GetRoomInformations()
         {
-          if (_context.RoomInformations == null)
+            var result = await _informationService.GetRoomInformations();
+          if (result == null)
           {
               return NotFound();
           }
-            return await _context.RoomInformations.ToListAsync();
+            return result;
         }
 
+        /*
         // GET: api/RoomInformation/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomInformation>> GetRoomInformation(int id)
@@ -50,6 +54,8 @@ namespace WebAPI.Controllers
             return roomInformation;
         }
 
+        */
+        /*
         // PUT: api/RoomInformation/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -119,6 +125,6 @@ namespace WebAPI.Controllers
         private bool RoomInformationExists(int id)
         {
             return (_context.RoomInformations?.Any(e => e.RoomId == id)).GetValueOrDefault();
-        }
+        }*/
     }
 }

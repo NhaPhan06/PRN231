@@ -1,7 +1,9 @@
+
+
 using AutoMapper;
-using BusinessObjects.DTOS.Request;
-using BusinessObjects.DTOS.Response;
-using BusinessObjects.Entities;
+using ModelsLayer.BusinessObjects;
+using ModelsLayer.DTOS.Request;
+using ModelsLayer.DTOS.Response;
 
 namespace BussinessLogic;
 

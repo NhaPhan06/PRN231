@@ -1,13 +1,15 @@
-using BusinessObjects.Entities;
+
+
+using ModelsLayer.BusinessObjects;
 
 namespace DataAccess.IRepository;
 
 public interface IRoomInformationRepository
 {
     Task<List<RoomInformation>> GetRoomToBooking(int id, DateTime start, DateTime end);
-    Task<IEnumerable<RoomInformation>> GetAll();
+    Task<List<RoomInformation>> GetAll();
     Task<RoomInformation> Get(int id);
-    void Add(RoomInformation roomInformation);
-    void Update(RoomInformation roomInformation);
+    Task<RoomInformation> Add(RoomInformation roomInformation);
+    Task<RoomInformation> Update(RoomInformation roomInformation);
     void Delete(int id);
 }

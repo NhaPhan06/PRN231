@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BusinessObjects.Entities;
+
 using DataAccess;
+using ModelsLayer.BusinessObjects;
 
 namespace WebAPI.Controllers
 {

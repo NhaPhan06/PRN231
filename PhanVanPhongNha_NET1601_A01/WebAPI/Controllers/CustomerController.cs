@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BusinessObjects.DTOS.Request;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BusinessObjects.Entities;
+
 using BussinessLogic.IService;
 using DataAccess;
+using ModelsLayer.BusinessObjects;
+using ModelsLayer.DTOS.Request;
 
 namespace WebAPI.Controllers
 {

@@ -1,6 +1,8 @@
-using BusinessObjects.Entities;
+
+
 using DataAccess.IRepository;
 using Microsoft.EntityFrameworkCore;
+using ModelsLayer.BusinessObjects;
 
 namespace DataAccess.Repository;
 
@@ -40,16 +42,18 @@ public class BookingReservationRepository : IBookingReservationRepository
         _context.SaveChanges();
     }
 
-    public void Update(BookingReservation bookingReservation)
+    public async void Update(BookingReservation bookingReservation)
     {
-        _context.Entry(bookingReservation).State = EntityState.Modified;
+        var booking = await _context.BookingReservations.FindAsync(bookingReservation.BookingReservationId);
+        booking = bookingReservation;
+        _context.BookingReservations.Update(booking);
         _context.SaveChanges();
     }
 
-    public void Delete(int id)
+    public async void Delete(int id)
     {
-        var bookingReservation = _context.BookingReservations.Find(id);
-        _context.BookingReservations.Remove(bookingReservation);
+        var bookingReservation = await _context.BookingReservations.FirstOrDefaultAsync(b => b.BookingReservationId == id);
+        _context.BookingReservations.Update(bookingReservation);
         _context.SaveChanges();
     }
 }

@@ -1,5 +1,7 @@
-using BusinessObjects.DTOS.Request;
-using BusinessObjects.Entities;
+
+
+using ModelsLayer.BusinessObjects;
+using ModelsLayer.DTOS.Request;
 
 namespace BussinessLogic.IService;
 

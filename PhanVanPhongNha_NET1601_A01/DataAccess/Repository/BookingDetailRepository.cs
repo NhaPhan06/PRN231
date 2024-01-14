@@ -1,6 +1,7 @@
-using BusinessObjects.Entities;
+
 using DataAccess.IRepository;
 using Microsoft.EntityFrameworkCore;
+using ModelsLayer.BusinessObjects;
 
 namespace DataAccess.Repository;
 
@@ -32,7 +33,6 @@ public class BookingDetailRepository : IBookingDetailRepository
 
     public async Task<BookingDetail> Update(BookingDetail bookingDetail)
     {
-        _context.Entry(bookingDetail).State = EntityState.Modified;
         _context.SaveChanges();
         return bookingDetail;
     }

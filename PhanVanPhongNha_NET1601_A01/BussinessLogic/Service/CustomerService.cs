@@ -1,8 +1,8 @@
 using AutoMapper;
-using BusinessObjects.DTOS.Request;
-using BusinessObjects.Entities;
 using BussinessLogic.IService;
 using DataAccess.IRepository;
+using ModelsLayer.BusinessObjects;
+using ModelsLayer.DTOS.Request;
 
 namespace BussinessLogic.Service;
 

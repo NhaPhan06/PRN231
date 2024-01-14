@@ -1,6 +1,8 @@
-using BusinessObjects.Entities;
+
+
 using DataAccess.IRepository;
 using Microsoft.EntityFrameworkCore;
+using ModelsLayer.BusinessObjects;
 
 namespace DataAccess.Repository;
 
@@ -13,7 +15,7 @@ public class RoomInformationRepository : IRoomInformationRepository
         _context = new FUMiniHotelManagementContext();
     }
 
-    public async Task<IEnumerable<RoomInformation>> GetAll()
+    public async Task<List<RoomInformation>> GetAll()
     {
         return await _context.RoomInformations.Include(ri => ri.BookingDetails).ToListAsync();
     }
@@ -30,16 +32,19 @@ public class RoomInformationRepository : IRoomInformationRepository
     }
     
     
-    public void Add(RoomInformation roomInformation)
+    public async Task<RoomInformation> Add(RoomInformation roomInformation)
     {
         _context.RoomInformations.Add(roomInformation);
         _context.SaveChanges();
+        return await _context.RoomInformations.FirstOrDefaultAsync(r => r.RoomId == roomInformation.RoomId);
     }
 
-    public void Update(RoomInformation roomInformation)
-    {
-        _context.Entry(roomInformation).State = EntityState.Modified;
+    public async Task<RoomInformation> Update(RoomInformation roomInformation)
+    { 
+        _context.RoomInformations.Update(roomInformation);
         _context.SaveChanges();
+        return await _context.RoomInformations.FirstOrDefaultAsync(r => r.RoomId == roomInformation.RoomId);
+
     }
 
     public void Delete(int id)
