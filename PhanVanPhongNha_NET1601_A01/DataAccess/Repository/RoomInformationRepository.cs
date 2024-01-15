@@ -17,17 +17,17 @@ public class RoomInformationRepository : IRoomInformationRepository
 
     public async Task<List<RoomInformation>> GetAll()
     {
-        return await _context.RoomInformations.ToListAsync();
+        return await _context.RoomInformations.Include(ri => ri.RoomType).ToListAsync();
     }
 
     public async Task<RoomInformation> Get(int id)
     {
-        return await _context.RoomInformations.Include(ri => ri.BookingDetails).FirstOrDefaultAsync(ri => ri.RoomId == id);
+        return await _context.RoomInformations.Include(ri => ri.RoomType).FirstOrDefaultAsync(ri => ri.RoomId == id);
     }
 
     public async Task<List<RoomInformation>> GetRoomToBooking(int id, DateTime start, DateTime end)
     {
-        return _context.RoomInformations.Where(r => r.RoomTypeId == id && !r.BookingDetails.Any(b => (b.StartDate <= end && b.EndDate >= start)))
+        return _context.RoomInformations.Include(ri => ri.RoomType).Where(r => r.RoomTypeId == id && !r.BookingDetails.Any(b => (b.StartDate <= end && b.EndDate >= start)))
             .ToList();
     }
     
@@ -36,15 +36,20 @@ public class RoomInformationRepository : IRoomInformationRepository
     {
         _context.RoomInformations.Add(roomInformation);
         _context.SaveChanges();
-        return await _context.RoomInformations.FirstOrDefaultAsync(r => r.RoomId == roomInformation.RoomId);
+        return await _context.RoomInformations.Include(ri => ri.RoomType).OrderBy(src => src.RoomTypeId).LastAsync();;
     }
 
     public async Task<RoomInformation> Update(RoomInformation roomInformation)
     { 
         _context.RoomInformations.Update(roomInformation);
         _context.SaveChanges();
-        return await _context.RoomInformations.FirstOrDefaultAsync(r => r.RoomId == roomInformation.RoomId);
+        return await _context.RoomInformations.Include(ri => ri.RoomType).OrderBy(src => src.RoomTypeId).LastAsync();
 
+    }
+
+    public async Task<int> Count()
+    {
+        return await _context.RoomInformations.CountAsync();
     }
 
     public void Delete(int id)

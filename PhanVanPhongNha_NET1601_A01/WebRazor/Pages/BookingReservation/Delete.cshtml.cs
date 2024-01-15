@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess;
 using ModelsLayer.BusinessObjects;
 
-namespace WebRazor.Pages.RoomInformation
+namespace WebRazor.Pages.BookingReservation
 {
     public class DeleteModel : PageModel
     {
@@ -20,40 +20,40 @@ namespace WebRazor.Pages.RoomInformation
         }
 
         [BindProperty]
-      public ModelsLayer.BusinessObjects.RoomInformation RoomInformation { get; set; } = default!;
+      public ModelsLayer.BusinessObjects.BookingReservation BookingReservation { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.RoomInformations == null)
+            if (id == null || _context.BookingReservations == null)
             {
                 return NotFound();
             }
 
-            var roominformation = await _context.RoomInformations.FirstOrDefaultAsync(m => m.RoomId == id);
+            var bookingreservation = await _context.BookingReservations.FirstOrDefaultAsync(m => m.BookingReservationId == id);
 
-            if (roominformation == null)
+            if (bookingreservation == null)
             {
                 return NotFound();
             }
             else 
             {
-                RoomInformation = roominformation;
+                BookingReservation = bookingreservation;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.RoomInformations == null)
+            if (id == null || _context.BookingReservations == null)
             {
                 return NotFound();
             }
-            var roominformation = await _context.RoomInformations.FindAsync(id);
+            var bookingreservation = await _context.BookingReservations.FindAsync(id);
 
-            if (roominformation != null)
+            if (bookingreservation != null)
             {
-                RoomInformation = roominformation;
-                _context.RoomInformations.Remove(RoomInformation);
+                BookingReservation = bookingreservation;
+                _context.BookingReservations.Remove(BookingReservation);
                 await _context.SaveChangesAsync();
             }
 

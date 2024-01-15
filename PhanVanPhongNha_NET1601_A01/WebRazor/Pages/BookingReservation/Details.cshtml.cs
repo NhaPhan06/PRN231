@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess;
 using ModelsLayer.BusinessObjects;
 
-namespace WebRazor.Pages.RoomInformation
+namespace WebRazor.Pages.BookingReservation
 {
     public class DetailsModel : PageModel
     {
@@ -19,23 +19,23 @@ namespace WebRazor.Pages.RoomInformation
             _context = context;
         }
 
-      public ModelsLayer.BusinessObjects.RoomInformation RoomInformation { get; set; } = default!; 
+      public ModelsLayer.BusinessObjects.BookingReservation BookingReservation { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.RoomInformations == null)
+            if (id == null || _context.BookingReservations == null)
             {
                 return NotFound();
             }
 
-            var roominformation = await _context.RoomInformations.FirstOrDefaultAsync(m => m.RoomId == id);
-            if (roominformation == null)
+            var bookingreservation = await _context.BookingReservations.FirstOrDefaultAsync(m => m.BookingReservationId == id);
+            if (bookingreservation == null)
             {
                 return NotFound();
             }
             else 
             {
-                RoomInformation = roominformation;
+                BookingReservation = bookingreservation;
             }
             return Page();
         }

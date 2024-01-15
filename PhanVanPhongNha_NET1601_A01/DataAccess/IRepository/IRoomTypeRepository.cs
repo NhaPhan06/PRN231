@@ -6,9 +6,9 @@ namespace DataAccess.IRepository;
 
 public interface IRoomTypeRepository
 {
-    Task<IEnumerable<RoomType>> GetAll();
+    Task<List<RoomType>> GetAll();
     Task<RoomType> Get(int id);
-    void Add(RoomType roomType);
-    void Update(RoomType roomType);
+    Task<RoomType> Add(RoomType roomType);
+    Task<RoomType> Update(RoomType roomType);
     void Delete(int id);
 }

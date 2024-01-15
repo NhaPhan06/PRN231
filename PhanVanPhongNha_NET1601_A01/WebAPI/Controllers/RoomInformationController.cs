@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 using DataAccess;
 using ModelsLayer.BusinessObjects;
+using ModelsLayer.DTOS.Request;
+using ModelsLayer.DTOS.Response;
 
 namespace WebAPI.Controllers
 {
@@ -25,7 +27,7 @@ namespace WebAPI.Controllers
 
         // GET: api/RoomInformation
         [HttpGet]
-        public async Task<ActionResult<IList<RoomInformation>>> GetRoomInformations()
+        public async Task<ActionResult<IList<RoomResponse>>> GetRoomInformations()
         {
             var result = await _informationService.GetRoomInformations();
           if (result == null)
@@ -38,7 +40,7 @@ namespace WebAPI.Controllers
          
          // GET: api/RoomInformation/5
          [HttpGet("{id}")]
-         public async Task<ActionResult<RoomInformation>> GetRoomInformation(int id)
+         public async Task<ActionResult<RoomResponse>> GetRoomInformation(int id)
          {
              var roomInformation = await _informationService.GetRoomInformation(id);
              if (roomInformation == null)
@@ -60,7 +62,7 @@ namespace WebAPI.Controllers
          // POST: api/RoomInformation
          // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
          [HttpPost]
-         public async Task<ActionResult<RoomInformation>> CreateRoomInformation(RoomInformation roomInformation)
+         public async Task<ActionResult<RoomResponse>> CreateRoomInformation(CreateRoomRequest roomInformation)
          {
              return Ok(await _informationService.CreateRoomInformation(roomInformation));
          }

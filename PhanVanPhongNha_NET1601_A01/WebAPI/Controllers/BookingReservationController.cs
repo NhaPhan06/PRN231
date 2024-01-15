@@ -9,6 +9,7 @@ using BussinessLogic.IService;
 using DataAccess;
 using ModelsLayer.BusinessObjects;
 using ModelsLayer.DTOS.Request;
+using ModelsLayer.DTOS.Response;
 
 namespace WebAPI.Controllers
 {
@@ -25,21 +26,21 @@ namespace WebAPI.Controllers
 
         // GET: api/BookingReservation
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookingReservation>>> GetBookingReservations()
+        public async Task<ActionResult<List<ReservationResponse>>> GetBookingReservations()
         {
             return Ok(await _bookingReservationService.GetBookingReservations());
         }
         
         // GET
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<BookingReservation>>> GetBookingReservationsByCustomer(int id)
+        public async Task<ActionResult<List<ReservationResponse>>> GetBookingReservationsByCustomer(int id)
         {
             return Ok(await _bookingReservationService.GetBookingReservationByCustomerId(id));
         }
 
         // GET: api/BookingReservation/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookingReservation>> GetBookingReservation(int id)
+        public async Task<ActionResult<ReservationResponse>> GetBookingReservation(int id)
         {
             var bookingReservation = await _bookingReservationService.GetBookingReservation(id);
             if (bookingReservation == null)
@@ -52,7 +53,7 @@ namespace WebAPI.Controllers
         // PUT: api/BookingReservation/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<BookingReservation>> PutBookingReservation(BookingReservation bookingReservation)
+        public async Task<ActionResult<ReservationResponse>> PutBookingReservation(BookingReservation bookingReservation)
         {
             return Ok(await _bookingReservationService.UpdateBookingReservation(bookingReservation));
         }
@@ -60,9 +61,9 @@ namespace WebAPI.Controllers
         // POST: api/BookingReservation
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BookingReservation>> CreateBookingReservation(BookingRequest bookingRequest)
+        public async Task<ActionResult<ReservationResponse>> CreateBookingReservation(BookingRequest bookingRequest)
         {
-            var result = _bookingReservationService.CreateBookingReservation(bookingRequest);
+            var result = await _bookingReservationService.CreateBookingReservation(bookingRequest);
             return Ok(result);
         }
 

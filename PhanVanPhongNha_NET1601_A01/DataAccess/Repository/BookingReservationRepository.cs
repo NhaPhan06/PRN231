@@ -17,7 +17,7 @@ public class BookingReservationRepository : IBookingReservationRepository
 
     public async Task<List<BookingReservation>> GetAll()
     {
-        return await _context.BookingReservations.Include(br => br.Customer).ToListAsync();
+        return await _context.BookingReservations.Include(br => br.BookingDetails).Include(br => br.Customer).ToListAsync();
     }
 
     public async Task<List<BookingReservation>> GetListByCustomerID(int id)
@@ -36,18 +36,20 @@ public class BookingReservationRepository : IBookingReservationRepository
         return await _context.BookingReservations.Include(br => br.BookingDetails).FirstOrDefaultAsync(br => br.BookingReservationId == id);
     }
 
-    public void Add(BookingReservation bookingReservation)
+    public async Task<BookingReservation> Add(BookingReservation bookingReservation)
     {
         _context.BookingReservations.Add(bookingReservation);
         _context.SaveChanges();
+        return await _context.BookingReservations.Include(br => br.BookingDetails).FirstOrDefaultAsync(br => br.BookingReservationId == bookingReservation.BookingReservationId); ;
     }
 
-    public async void Update(BookingReservation bookingReservation)
+    public async Task<BookingReservation> Update(BookingReservation bookingReservation)
     {
         var booking = await _context.BookingReservations.FindAsync(bookingReservation.BookingReservationId);
         booking = bookingReservation;
         _context.BookingReservations.Update(booking);
         _context.SaveChanges();
+        return await _context.BookingReservations.Include(br => br.BookingDetails).FirstOrDefaultAsync(br => br.BookingReservationId == bookingReservation.BookingReservationId); ;
     }
 
     public async void Delete(int id)

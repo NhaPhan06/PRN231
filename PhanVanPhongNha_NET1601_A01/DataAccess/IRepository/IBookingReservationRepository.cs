@@ -10,7 +10,7 @@ public interface IBookingReservationRepository
     Task<List<BookingReservation>> GetListByCustomerID(int id);
     Task<int> Count();
     Task<BookingReservation> Get(int id);
-    void Add(BookingReservation bookingReservation);
-    void Update(BookingReservation bookingReservation);
+    Task<BookingReservation> Add(BookingReservation bookingReservation);
+    Task<BookingReservation> Update(BookingReservation bookingReservation);
     void Delete(int id);
 }

@@ -11,7 +11,6 @@ namespace WebRazor.Pages;
 public class IndexModel : PageModel {
         private readonly HttpClient _client = new HttpClient();
         
-    
         [BindProperty]
         public LoginRequest  LoginRequest { get; set; }
 

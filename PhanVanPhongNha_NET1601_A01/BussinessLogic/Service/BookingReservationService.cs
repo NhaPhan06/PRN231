@@ -21,14 +21,14 @@ public class BookingReservationService : IBookingReservationService
         _roomInformationRepository = roomInformationRepository;
         _reservationRepository = reservationRepository;
     }
-    public Task<List<BookingReservation>> GetBookingReservations()
+    public async Task<List<ReservationResponse>> GetBookingReservations()
     {
-        return _reservationRepository.GetAll();
+        return _mapper.Map<List<ReservationResponse>>( await _reservationRepository.GetAll());
     }
 
-    public Task<BookingReservation> GetBookingReservation(int id)
+    public async Task<ReservationResponse> GetBookingReservation(int id)
     {
-        return _reservationRepository.Get(id);
+        return _mapper.Map<ReservationResponse>(await _reservationRepository.Get(id));
     }
 
     public async Task<List<ReservationResponse>> GetBookingReservationByCustomerId(int id)
@@ -37,7 +37,7 @@ public class BookingReservationService : IBookingReservationService
         return result;
     }
 
-    public async Task<BookingReservation> CreateBookingReservation(BookingRequest bookingRequest)
+    public async Task<ReservationResponse> CreateBookingReservation(BookingRequest bookingRequest)
     {
         var listRoom = await _roomInformationRepository.GetRoomToBooking(bookingRequest.RoomType, bookingRequest.StartDate,
             bookingRequest.EndDate);
@@ -69,12 +69,12 @@ public class BookingReservationService : IBookingReservationService
         reservation.TotalPrice = totalPrice;
         _reservationRepository.Add(reservation);
 
-        return reservation;
+        return _mapper.Map<ReservationResponse>(reservation);
     }
 
-    public Task<BookingReservation> UpdateBookingReservation(BookingReservation bookingReservation)
+    public async Task<ReservationResponse> UpdateBookingReservation(BookingReservation bookingReservation)
     {
-        throw new NotImplementedException();
+        return _mapper.Map<ReservationResponse>(await _reservationRepository.Update(bookingReservation));
     }
 
     public async Task DeleteBookingReservation(int id)

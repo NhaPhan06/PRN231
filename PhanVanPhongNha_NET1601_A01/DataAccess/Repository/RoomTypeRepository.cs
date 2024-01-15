@@ -15,26 +15,28 @@ public class RoomTypeRepository : IRoomTypeRepository
         _context = new FUMiniHotelManagementContext();
     }
 
-    public async Task<IEnumerable<RoomType>> GetAll()
+    public async Task<List<RoomType>> GetAll()
     {
-        return await _context.RoomTypes.Include(rt => rt.RoomInformations).ToListAsync();
+        return await _context.RoomTypes.ToListAsync();
     }
 
     public async Task<RoomType> Get(int id)
     {
-        return await _context.RoomTypes.Include(rt => rt.RoomInformations).FirstOrDefaultAsync(rt => rt.RoomTypeId == id);
+        return await _context.RoomTypes.FirstOrDefaultAsync(rt => rt.RoomTypeId == id);
     }
 
-    public void Add(RoomType roomType)
+    public async Task<RoomType> Add(RoomType roomType)
     {
         _context.RoomTypes.Add(roomType);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        return await _context.RoomTypes.LastAsync();
     }
 
-    public void Update(RoomType roomType)
+    public async Task<RoomType> Update(RoomType roomType)
     {
         _context.Entry(roomType).State = EntityState.Modified;
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        return await _context.RoomTypes.LastAsync();
     }
 
     public void Delete(int id)

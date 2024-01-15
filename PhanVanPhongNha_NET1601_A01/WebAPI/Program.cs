@@ -36,11 +36,7 @@ builder.Services.AddScoped<IRoomTypeRepository,RoomTypeRepository>();
 //AUTOMAPPER
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
-builder.Services.AddControllers(config =>
-{
-    config.RespectBrowserAcceptHeader = true;
-    config.ReturnHttpNotAcceptable = true;
-}).AddXmlDataContractSerializerFormatters().AddMvcOptions(c => c.OutputFormatters.Add(new  StreamOutputFormatter()));
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
