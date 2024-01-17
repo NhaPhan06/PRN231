@@ -31,7 +31,6 @@ namespace WebRazor.Pages.Admin
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            
             var json = JsonSerializer.Serialize(RoomInformation);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = _client.PostAsync("https://localhost:7098/api/RoomInformation/CreateRoomInformation", content).Result;

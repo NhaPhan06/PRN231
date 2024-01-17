@@ -12,8 +12,6 @@
 
     <ItemGroup>
       <Folder Include="Pages\Admin\" />
-      <Folder Include="Pages\BookingReservation\" />
-      <Folder Include="Pages\Customer\" />
     </ItemGroup>
 
     <ItemGroup>

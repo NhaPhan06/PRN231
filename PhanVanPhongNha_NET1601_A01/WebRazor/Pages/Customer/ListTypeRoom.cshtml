@@ -2,8 +2,8 @@
 @model WebRazor.Pages.Customer.ListTypeRoomModel
 
 @{
-    var permission = HttpContext.Session.GetString("account");
     
+    var permission = HttpContext.Session.GetString("account");
     if (permission == null)
     {
         Response.Redirect("../Index");
@@ -11,7 +11,7 @@
     }
     
     ViewData["Title"] = "ListTypeRoom";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
 }
 
 <h1>ListTypeRoom</h1>

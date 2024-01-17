@@ -31,7 +31,7 @@ public class IndexModel : PageModel {
                 else
                 {
                     HttpContext.Session.SetString("account", data);
-                    return RedirectToPage("./Customer/ListTypeRoom");
+                    return RedirectToPage("./Customer/CustomerInformation");
                 } ;
             }
             return Page();

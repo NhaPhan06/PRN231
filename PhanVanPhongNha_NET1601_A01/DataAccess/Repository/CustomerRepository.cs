@@ -32,7 +32,7 @@ public class CustomerRepository : ICustomerRepository
 
     public async Task<Customer> Get(int id)
     {
-        return await _context.Customers.Include(c => c.BookingReservations).FirstOrDefaultAsync(c => c.CustomerId == id);
+        return await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
     }
 
     public async Task<Customer> Add(Customer customer)

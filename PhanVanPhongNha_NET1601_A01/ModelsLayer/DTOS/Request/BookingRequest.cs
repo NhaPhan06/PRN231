@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.Practices.EnterpriseLibrary.Validation.Validators;
+
 namespace ModelsLayer.DTOS.Request;
 
 public class BookingRequest

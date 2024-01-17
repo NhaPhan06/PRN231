@@ -23,6 +23,11 @@ public class RoomTypeService : IRoomTypeService
         return await _roomTypeRepository.GetAll();
     }
 
+    public async Task<RoomType> GetById(int id)
+    {
+        return await _roomTypeRepository.Get(id);
+    }
+
     public async Task<RoomType> Update(RoomType roomType)
     {
         return await _roomTypeRepository.Update(roomType);

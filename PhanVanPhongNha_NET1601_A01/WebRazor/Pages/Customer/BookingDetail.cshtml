@@ -1,16 +1,15 @@
 @page
-@model WebRazor.Pages.Admin.BookingDetailModel
+@model WebRazor.Pages.Customer.BookingDetailModel
 
 @{
     var permission = HttpContext.Session.GetString("account");
-    
-    if (permission == null || !permission.Equals("Admin"))
+    if (permission == null)
     {
         Response.Redirect("../Index");
         return;
     }
     ViewData["Title"] = "BookingDetail";
-    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
 }
 
 <h1>BookingDetail</h1>

@@ -30,6 +30,13 @@ namespace WebAPI.Controllers
             return await _roomTypeService.Read();
         }
         
+        // GET: api/RoomType
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RoomType>> GetRoomTypesByID(int id)
+        {
+            return await _roomTypeService.GetById(id);
+        }
+        
         // PUT: api/RoomType/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

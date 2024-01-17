@@ -1,42 +1,57 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+using BussinessLogic.Middleware;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using DataAccess;
 using ModelsLayer.BusinessObjects;
 using ModelsLayer.DTOS.Request;
 using ModelsLayer.DTOS.Response;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebRazor.Pages.Customer
 {
     public class BookingRoomModel : PageModel
     {
-
-        public IActionResult OnGet(int id)
+        private readonly HttpClient _client = new HttpClient();
+        [BindProperty]
+        public BookingRequest BookingRequest { get; set; } = default!;
+        public RoomType typeRoom { get; set; }
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-        ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "EmailAddress");
+            var json = await _client.GetAsync($"https://localhost:7098/api/RoomType/GetRoomTypesByID/{id}");
+            if (json.IsSuccessStatusCode)
+            {
+                typeRoom = JsonConvert.DeserializeObject<RoomType>(await json.Content.ReadAsStringAsync());
+            }
             return Page();
         }
 
-        [BindProperty]
-        public BookingRequest BookingRequest { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int typeId)
         {
-          if (!ModelState.IsValid || _context.BookingReservations == null || BookingReservation == null)
+            BookingRequest.BookingDate = DateTime.Now;
+            BookingRequest.CustomerId = int.Parse(HttpContext.Session.GetString("account"));
+            BookingRequest.RoomType = typeId;
+            try
             {
-                return Page();
+                var json = JsonSerializer.Serialize(BookingRequest);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = _client.PostAsync("https://localhost:7098/api/BookingReservation/CreateBookingReservation", content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToPage("./ListTypeRoom");
+                }
+                else
+                {
+                    var result = JsonSerializer.Deserialize<ErrorResult>(await response.Content.ReadAsStringAsync());
+                    throw new Exception(result.Exception);
+                }
             }
-
-            _context.BookingReservations.Add(BookingReservation);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            catch (Exception e)
+            {
+                ViewData["notification"] = e.Message;
+            }
+            await OnGetAsync(typeId);
+            return Page();
         }
     }
 }
