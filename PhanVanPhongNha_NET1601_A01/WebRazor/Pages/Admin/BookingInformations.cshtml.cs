@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +9,12 @@ using DataAccess;
 using ModelsLayer.BusinessObjects;
 using ModelsLayer.DTOS.Response;
 using Newtonsoft.Json;
-using NuGet.Protocol;
 
-namespace WebRazor.Pages.BookingReservation
+namespace WebRazor.Pages.Admin
 {
-    public class IndexModel : PageModel
+    public class BookingInformationsModel : PageModel
     {
         private readonly HttpClient _client = new HttpClient();
-
-
         public IList<ReservationResponse> BookingReservation { get;set; } = default!;
 
         public async Task OnGetAsync()

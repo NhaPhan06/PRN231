@@ -19,6 +19,11 @@ public class BookingDetailRepository : IBookingDetailRepository
         return await _context.BookingDetails.ToListAsync();
     }
 
+    public async Task<List<BookingDetail>> GetByReservation(int id)
+    {
+        return await _context.BookingDetails.Where(detail => detail.BookingReservationId == id).ToListAsync();
+    }
+
     public async Task<BookingDetail> Get(int id)
     {
         return await _context.BookingDetails.FindAsync(id);

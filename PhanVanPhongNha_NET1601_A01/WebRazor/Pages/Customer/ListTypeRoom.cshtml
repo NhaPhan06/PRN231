@@ -1,0 +1,52 @@
+@page
+@model WebRazor.Pages.Customer.ListTypeRoomModel
+
+@{
+    var permission = HttpContext.Session.GetString("account");
+    
+    if (permission == null)
+    {
+        Response.Redirect("../Index");
+        return;
+    }
+    
+    ViewData["Title"] = "ListTypeRoom";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>ListTypeRoom</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType[0].RoomTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType[0].TypeDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType[0].TypeNote)
+            </th>
+            <th> Booking </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.RoomType) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeNote)
+            </td>
+            <td>
+                <a asp-page="./BookingRoom" asp-route-id="@item.RoomTypeId">Booking</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

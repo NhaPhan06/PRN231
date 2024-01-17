@@ -34,5 +34,17 @@ namespace WebAPI.Controllers
             }
             return Ok(result);
         }
+        
+        // GET: api/BookingDetail
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<BookingDetail>>> GetBookingDetailsByReservationId(int id)
+        {
+            var result  = await _bookingDetail.GetBookingDetailsByReservationId(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }

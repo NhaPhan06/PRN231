@@ -1,0 +1,62 @@
+@page
+@model WebRazor.Pages.Admin.BookingInformationsModel
+
+@{
+    var permission = HttpContext.Session.GetString("account");
+    
+    if (permission == null || !permission.Equals("Admin"))
+    {
+        Response.Redirect("../Index");
+        return;
+    }
+    
+    ViewData["Title"] = "BookingInformations";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>BookingInformations</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].BookingReservationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].BookingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].TotalPrice)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.BookingReservation)
+    {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingReservationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    <a asp-page="./BookingDetail" asp-route-id="@item.BookingReservationId">Details</a>
+                </td>
+            </tr>
+    }
+    </tbody>
+</table>

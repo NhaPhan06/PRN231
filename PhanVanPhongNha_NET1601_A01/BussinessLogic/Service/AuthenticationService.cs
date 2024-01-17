@@ -21,17 +21,15 @@ public class AuthenticationService : IAuthenticationService
     
     public async Task<string> Login(LoginRequest request)
     {
+        var customer = await _customerRepository.CheckLogin(request.Email, request.Password);
         if (request.Email == _adminAccount.Email && request.Password == _adminAccount.Password)
         {
             return "Admin";
         }
-        else if ( await _customerRepository.CheckLogin(request.Email,request.Password) == true)
+        if ( customer != null)
         {
-            return "Customer";
+            return customer.CustomerId.ToString();
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

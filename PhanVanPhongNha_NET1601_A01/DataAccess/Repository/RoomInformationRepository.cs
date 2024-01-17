@@ -27,7 +27,7 @@ public class RoomInformationRepository : IRoomInformationRepository
 
     public async Task<List<RoomInformation>> GetRoomToBooking(int id, DateTime start, DateTime end)
     {
-        return _context.RoomInformations.Include(ri => ri.RoomType).Where(r => r.RoomTypeId == id && !r.BookingDetails.Any(b => (b.StartDate <= end && b.EndDate >= start)))
+        return _context.RoomInformations.Include(ri => ri.RoomType).Where(r => r.RoomStatus == 1 && r.RoomTypeId == id && !r.BookingDetails.Any(b => (b.StartDate <= end && b.EndDate >= start)))
             .ToList();
     }
     
@@ -55,7 +55,15 @@ public class RoomInformationRepository : IRoomInformationRepository
     public void Delete(int id)
     {
         var roomInformation = _context.RoomInformations.Find(id);
-        _context.RoomInformations.Remove(roomInformation);
+        if (roomInformation.RoomStatus == 0)
+        {
+            roomInformation.RoomStatus = 1;
+        }
+        else
+        {
+            roomInformation.RoomStatus = 0;
+        }
+        _context.RoomInformations.Update(roomInformation);
         _context.SaveChanges();
     }
 }

@@ -21,6 +21,11 @@ public class BookingDetailService : IBookingDetailService
         return _bookingDetailRepository.GetAll();
     }
 
+    public Task<List<BookingDetail>> GetBookingDetailsByReservationId(int id)
+    {
+        return _bookingDetailRepository.GetByReservation(id);
+    }
+
     public Task<BookingDetail> GetBookingDetail(int id)
     {
         return _bookingDetailRepository.Get(id);

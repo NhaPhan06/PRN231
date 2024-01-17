@@ -1,9 +1,7 @@
 ﻿using System.Text;
-using BussinessLogic.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ModelsLayer.DTOS.Request;
-using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebRazor.Pages;
@@ -22,19 +20,20 @@ public class IndexModel : PageModel {
             var json = JsonSerializer.Serialize(LoginRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = _client.PostAsync("https://localhost:7098/api/Athentication/Login", content).Result;
-            
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
                 if (data == "Admin")
                 {
-                    return RedirectToPage("Privacy");
+                    HttpContext.Session.SetString("account", data);
+                    return RedirectToPage("./Admin/RoomInformations");
                 }
-                else if (data == "Customer")
+                else
                 {
-                    return RedirectToPage("Error");
+                    HttpContext.Session.SetString("account", data);
+                    return RedirectToPage("./Customer/ListTypeRoom");
                 } ;
             }
-            return RedirectToPage("/CandidateProfile/Index");
+            return Page();
         }
     }

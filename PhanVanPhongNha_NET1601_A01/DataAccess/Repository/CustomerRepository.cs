@@ -20,15 +20,14 @@ public class CustomerRepository : ICustomerRepository
         return await _context.Customers.ToListAsync();
     }
 
-    public async Task<bool> CheckLogin(string email, string password)
+    public async Task<Customer> CheckLogin(string email, string password)
     {
-        var check = await _context.Customers.Where(c => c.EmailAddress == email && c.Password == password).CountAsync();
-        if (check == 0)
+        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.EmailAddress == email && c.Password == password);
+        if (customer == null)
         {
-            return false;
+            return null;
         }
-
-        return true;
+        return customer;
     }
 
     public async Task<Customer> Get(int id)
@@ -53,7 +52,14 @@ public class CustomerRepository : ICustomerRepository
     public void Delete(int id)
     {
         var customer = _context.Customers.Find(id);
-        customer.CustomerStatus = 0;
+        if (customer.CustomerStatus == 0)
+        {
+            customer.CustomerStatus = 1;
+        }
+        else
+        {
+            customer.CustomerStatus = 0;
+        }
         _context.Customers.Update(customer);
         _context.SaveChanges();
     }

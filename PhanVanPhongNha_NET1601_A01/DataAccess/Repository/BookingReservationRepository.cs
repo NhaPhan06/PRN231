@@ -54,7 +54,15 @@ public class BookingReservationRepository : IBookingReservationRepository
 
     public async void Delete(int id)
     {
-        var bookingReservation = await _context.BookingReservations.FirstOrDefaultAsync(b => b.BookingReservationId == id);
+        var bookingReservation = _context.BookingReservations.Find(id);
+        if (bookingReservation.BookingStatus == 0)
+        {
+            bookingReservation.BookingStatus = 1;
+        }
+        else
+        {
+            bookingReservation.BookingStatus = 0;
+        }
         _context.BookingReservations.Update(bookingReservation);
         _context.SaveChanges();
     }
