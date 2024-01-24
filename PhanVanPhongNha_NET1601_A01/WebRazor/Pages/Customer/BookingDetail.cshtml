@@ -36,25 +36,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BookingDetail[0].StartDate)
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].RoomId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingDetail[0].EndDate)
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].StartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingDetail[0].ActualPrice)
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].EndDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingDetail[0].BookingReservation)
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].ActualPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingDetail[0].Room)
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].RoomNumber)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.BookingDetail) {
+@foreach (var item in Model.BookingReservation.DetailResponse) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
@@ -65,10 +68,7 @@
                 @Html.DisplayFor(modelItem => item.ActualPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BookingReservation.BookingReservationId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.RoomNumber)
+                @Html.DisplayFor(modelItem => item.RoomNumber)
             </td>
         </tr>
 }

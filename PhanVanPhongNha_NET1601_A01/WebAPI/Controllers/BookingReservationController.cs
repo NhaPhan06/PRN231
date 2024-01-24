@@ -71,11 +71,6 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBookingReservation(int id)
         {
-            var bookingReservation = await _bookingReservationService.GetBookingReservation(id);
-            if (bookingReservation == null)
-            {
-                return NotFound();
-            }
             _bookingReservationService.DeleteBookingReservation(id);
             return NoContent();
         }

@@ -53,8 +53,8 @@ namespace WebAPI.Controllers
          
          // PUT: api/RoomInformation/5
          // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-         [HttpPut("{id}")]
-         public async Task<IActionResult> UpdateRoomInformation(RoomInformation roomInformation)
+         [HttpPut]
+         public async Task<IActionResult> UpdateRoomInformation(RoomResponse roomInformation)
          {
              return Ok(await _informationService.UpdateRoomInformation(roomInformation));
          }

@@ -29,6 +29,7 @@ public class MappingProfile : Profile {
             .ForMember(dest => dest.BookingDate, opt => opt.MapFrom(src => DateTime.Now));
 
         CreateMap<BookingReservation, ReservationResponse>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.BookingStatus))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.BookingReservationId, opt => opt.MapFrom(src => src.BookingReservationId))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
@@ -36,6 +37,7 @@ public class MappingProfile : Profile {
             .ForMember(dest => dest.DetailResponse, opt => opt.MapFrom(src => src.BookingDetails));
             
         CreateMap<BookingDetail, DetailResponse>()
+            .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber))
             .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.RoomId))
             .ForMember(dest => dest.ActualPrice, opt => opt.MapFrom(src => src.ActualPrice))
             .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
@@ -60,7 +62,7 @@ public class MappingProfile : Profile {
             .ForMember(dest => dest.RoomDetailDescription, opt => opt.MapFrom(src => src.RoomDetailDescription))
             .ForMember(dest => dest.RoomPricePerDay, opt => opt.MapFrom(src => src.RoomPricePerDay))
             .ForMember(dest => dest.RoomStatus, opt => opt.MapFrom(src => 1));
-
+        
     }
 
 }

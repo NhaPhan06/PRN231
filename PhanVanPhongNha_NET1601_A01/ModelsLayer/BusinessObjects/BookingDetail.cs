@@ -10,7 +10,6 @@ namespace ModelsLayer.BusinessObjects
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal? ActualPrice { get; set; }
-
         public virtual BookingReservation BookingReservation { get; set; } = null!;
         public virtual RoomInformation Room { get; set; } = null!;
     }

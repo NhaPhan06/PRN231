@@ -68,8 +68,7 @@
                     @Html.DisplayFor(modelItem => item.RoomStatus)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.RoomId">Details</a> |
+                    <a asp-page="./RoomUpdate" asp-route-id="@item.RoomId">Edit</a>
                 </td>
                 <td>
                     <button type="submit"> Change Status</button>

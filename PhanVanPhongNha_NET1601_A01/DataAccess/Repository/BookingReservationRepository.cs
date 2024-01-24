@@ -22,7 +22,7 @@ public class BookingReservationRepository : IBookingReservationRepository
 
     public async Task<List<BookingReservation>> GetListByCustomerID(int id)
     {
-        return await _context.BookingReservations.Include(detail => detail.BookingDetails)
+        return await _context.BookingReservations.Include(detail => detail.BookingDetails).ThenInclude(room => room.Room)
             .Where(r => r.CustomerId == id).OrderByDescending(src => src.BookingDate).ToListAsync();
     }
 
@@ -33,7 +33,7 @@ public class BookingReservationRepository : IBookingReservationRepository
 
     public async Task<BookingReservation> Get(int id)
     {
-        return await _context.BookingReservations.Include(br => br.BookingDetails).FirstOrDefaultAsync(br => br.BookingReservationId == id);
+        return await _context.BookingReservations.Include(br => br.BookingDetails).ThenInclude(room => room.Room).FirstOrDefaultAsync(br => br.BookingReservationId == id);
     }
 
     public async Task<BookingReservation> Add(BookingReservation bookingReservation)

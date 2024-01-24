@@ -8,6 +8,8 @@ public class ReservationResponse
     public int CustomerId { get; set; }
     public DateTime? BookingDate { get; set; }
     public decimal? TotalPrice { get; set; }
+    
+    public int Status { get; set; }
     public List<DetailResponse> DetailResponse { get; set; }
 }
 

@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DataAccess;
-using ModelsLayer.BusinessObjects;
 using Newtonsoft.Json;
-
+using JsonSerializer = System.Text.Json.JsonSerializer;
 namespace WebRazor.Pages.Customer
 {
     public class CustomerInformationModel : PageModel
@@ -35,32 +29,28 @@ namespace WebRazor.Pages.Customer
             return Page();
         }
         
-        /*public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            _context.Attach(Customer).State = EntityState.Modified;
-
+            
             try
             {
-                await _context.SaveChangesAsync();
+                var json = JsonSerializer.Serialize(Customer);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = _client.PutAsync("https://localhost:7098/api/Customer/UpdateCustomer", content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return Page();
+                }
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!CustomerExists(Customer.CustomerId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ViewData["notification"] = e.Message;
             }
-
-            return RedirectToPage("./");
-        }*/
+            return Page();
+        }
     }
 }

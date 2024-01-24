@@ -16,19 +16,11 @@ namespace WebRazor.Pages.Customer
     {
         private readonly HttpClient _client = new HttpClient();
         public ReservationResponse BookingReservation { get; set; } = default!; 
-        public IList<BookingDetail> BookingDetail { get;set; } = default!;
 
         public async Task OnGetAsync(int id)
         {
-            var details = await _client.GetAsync($"https://localhost:7098/api/BookingDetail/GetBookingDetailsByReservationId/{id}");
-            if (details.IsSuccessStatusCode)
-            {
-                var jsonString = await details.Content.ReadAsStringAsync();
-
-                BookingDetail = JsonConvert.DeserializeObject<List<BookingDetail>>(jsonString);
-            }
             var reservation = await _client.GetAsync($"https://localhost:7098/api/BookingReservation/GetBookingReservation/{id}");
-            if (details.IsSuccessStatusCode)
+            if (reservation.IsSuccessStatusCode)
             {
                 var jsonString = await reservation.Content.ReadAsStringAsync();
 

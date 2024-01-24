@@ -12,7 +12,9 @@ public class IndexModel : PageModel {
         [BindProperty]
         public LoginRequest  LoginRequest { get; set; }
 
-        public void OnGet() {
+        public void OnGet()
+        {
+                HttpContext.Session.Clear();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -31,7 +33,7 @@ public class IndexModel : PageModel {
                 else
                 {
                     HttpContext.Session.SetString("account", data);
-                    return RedirectToPage("./Customer/CustomerInformation");
+                    return RedirectToPage("./Customer/ListTypeRoom");
                 } ;
             }
             return Page();

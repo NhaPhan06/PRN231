@@ -32,7 +32,13 @@ namespace WebRazor.Pages.Customer
 
                 BookingReservation = JsonConvert.DeserializeObject<List<ReservationResponse>>(jsonString);
             }
+            return Page();
+        }
 
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            var change = await _client.DeleteAsync($"https://localhost:7098/api/BookingReservation/DeleteBookingReservation/{id}");
+            await OnGetAsync();
             return Page();
         }
     }

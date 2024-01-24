@@ -16,9 +16,6 @@
 
 <h1>BookingInformations</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
     <tr>
@@ -34,6 +31,7 @@
         <th>
             @Html.DisplayNameFor(model => model.BookingReservation[0].TotalPrice)
         </th>
+        <th><a>Status</a></th>
         <th></th>
     </tr>
     </thead>
@@ -53,6 +51,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalPrice)
                 </td>
+                            <td>
+                                @{if(item.Status == 0)
+                                  {
+                                      <a>Cancel</a>
+                                  }
+                                  else
+                                  {
+                                      <a>Booking</a>
+                                  }
+                        }
                 <td>
                     <a asp-page="./BookingDetail" asp-route-id="@item.BookingReservationId">Details</a>
                 </td>

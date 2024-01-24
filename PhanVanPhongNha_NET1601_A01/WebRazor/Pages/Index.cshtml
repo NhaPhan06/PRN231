@@ -1,8 +1,8 @@
 ﻿@page
 @model IndexModel
 @{
+    Layout = "Shared/_Layout";
 }
-
 <div class="row">
     <div class="row-cols-md-4">
         <form method="post">
@@ -19,6 +19,10 @@
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-page="./CreateAccount">Create Account</a>
 </div>
 
 @if (ViewData["ErrorMessage"] != null)

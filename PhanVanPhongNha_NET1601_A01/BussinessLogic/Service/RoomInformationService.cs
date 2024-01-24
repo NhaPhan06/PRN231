@@ -27,9 +27,15 @@ public class RoomInformationService : IRoomInformationService
         return _mapper.Map<RoomResponse>(await _informationRepository.Get(id));
     }
 
-    public async Task<RoomResponse> UpdateRoomInformation(RoomInformation roomInformation)
+    public async Task<RoomResponse> UpdateRoomInformation(RoomResponse roomInformation)
     {
-        return _mapper.Map<RoomResponse>(await _informationRepository.Update(roomInformation));
+        var room = await _informationRepository.Get(roomInformation.RoomId);
+        room.RoomTypeId = roomInformation.RoomTypeId;
+        room.RoomNumber = roomInformation.RoomNumber;
+        room.RoomMaxCapacity = roomInformation.RoomMaxCapacity;
+        room.RoomDetailDescription = roomInformation.RoomDetailDescription;
+        room.RoomPricePerDay = roomInformation.RoomPricePerDay;
+        return _mapper.Map<RoomResponse>(await _informationRepository.Update(room));
     }
 
     public async Task<RoomResponse> CreateRoomInformation(CreateRoomRequest roomInformation)

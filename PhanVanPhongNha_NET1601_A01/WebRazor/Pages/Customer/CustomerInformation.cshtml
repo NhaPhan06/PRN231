@@ -29,12 +29,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Customer.Telephone" class="control-label"></label>
-                <input asp-for="Customer.Telephone" class="form-control" />
-                <span asp-validation-for="Customer.Telephone" class="text-danger"></span>
+                <input asp-for="Customer.Telephone" pattern="[0-9]{10}" required title="Please enter a 10-digit phone number" class="form-control" />
+                <span asp-validation-for="Customer.Telephone" class="text-danger" va></span>
             </div>
             <div class="form-group">
                 <label asp-for="Customer.EmailAddress" class="control-label"></label>
-                <input asp-for="Customer.EmailAddress" class="form-control" />
+                <input asp-for="Customer.EmailAddress" type="email" class="form-control" />
                 <span asp-validation-for="Customer.EmailAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -52,10 +52,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
