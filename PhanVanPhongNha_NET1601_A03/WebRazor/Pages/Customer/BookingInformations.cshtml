@@ -1,0 +1,87 @@
+@page
+@model WebRazor.Pages.Customer.BookingInformationsModel
+
+@{
+    var permission = HttpContext.Session.GetString("account");
+    if (permission == null)
+    {
+        Response.Redirect("../Index");
+        return;
+    }
+
+    ViewData["Title"] = "BookingInformations";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<h1>BookingInformations</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].BookingReservationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].BookingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingReservation[0].TotalPrice)
+        </th>
+        <th>
+            <a>Status</a>
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.BookingReservation)
+    {
+        <form method="post">
+            <input type="hidden" name="id" value="@item.BookingReservationId"/>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingReservationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    @{
+                        if (item.Status == 0)
+                        {
+                            <a>Cancel</a>
+                        }
+                        else
+                        {
+                            <a>Booking</a>
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-page="./BookingDetail" asp-route-id="@item.BookingReservationId">Details</a>
+                </td>
+                <td>
+                    @{
+                        if (item.Status == 1)
+                        {
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary"/>
+                            </div>
+                        }
+                    }
+                </td>
+            </tr>
+        </form>
+    }
+    </tbody>
+</table>

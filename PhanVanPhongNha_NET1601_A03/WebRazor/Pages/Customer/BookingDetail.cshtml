@@ -1,0 +1,77 @@
+@page
+@model WebRazor.Pages.Customer.BookingDetailModel
+
+@{
+    var permission = HttpContext.Session.GetString("account");
+    if (permission == null)
+    {
+        Response.Redirect("../Index");
+        return;
+    }
+    ViewData["Title"] = "BookingDetail";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<h1>BookingDetail</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingReservation.BookingDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingReservation.BookingDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingReservation.TotalPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingReservation.TotalPrice)
+        </dd>
+    </dl>
+</div>
+<div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].RoomId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].ActualPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingReservation.DetailResponse[0].RoomNumber)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.BookingReservation.DetailResponse) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

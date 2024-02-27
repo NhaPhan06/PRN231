@@ -1,0 +1,59 @@
+@page
+@model WebRazor.Pages.Customer.CustomerInformationModel
+
+@{
+    
+    var permission = HttpContext.Session.GetString("account");
+    if (permission == null)
+    {
+        Response.Redirect("../Index");
+        return;
+    }
+    ViewData["Title"] = "CustomerInformation";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<h1>CustomerInformation</h1>
+
+<h4>Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Customer.CustomerId" />
+            <div class="form-group">
+                <label asp-for="Customer.CustomerFullName" class="control-label"></label>
+                <input asp-for="Customer.CustomerFullName" class="form-control" />
+                <span asp-validation-for="Customer.CustomerFullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Telephone" class="control-label"></label>
+                <input asp-for="Customer.Telephone" pattern="[0-9]{10}" required title="Please enter a 10-digit phone number" class="form-control" />
+                <span asp-validation-for="Customer.Telephone" class="text-danger" va></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.EmailAddress" class="control-label"></label>
+                <input asp-for="Customer.EmailAddress" type="email" class="form-control" />
+                <span asp-validation-for="Customer.EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.CustomerBirthday" class="control-label"></label>
+                <input asp-for="Customer.CustomerBirthday" class="form-control" />
+                <span asp-validation-for="Customer.CustomerBirthday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Password" class="control-label"></label>
+                <input asp-for="Customer.Password" class="form-control" />
+                <span asp-validation-for="Customer.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

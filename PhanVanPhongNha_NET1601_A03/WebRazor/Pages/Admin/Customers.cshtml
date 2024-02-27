@@ -1,0 +1,68 @@
+@page
+@model WebRazor.Pages.Admin.CustomersModel
+
+@{
+    var permission = HttpContext.Session.GetString("account");
+
+    if (permission == null || !permission.Equals("Admin"))
+    {
+        Response.Redirect("../Index");
+        return;
+    }
+
+    ViewData["Title"] = "Customers";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Customers</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer[0].CustomerFullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer[0].Telephone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer[0].EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer[0].CustomerBirthday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer[0].CustomerStatus)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Customer)
+    {
+        <form method="post">
+            <input type="hidden" name="id" value="@item.CustomerId"/>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telephone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerBirthday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerStatus)
+                </td>
+                <td>
+                    <button type="submit"> Change Status</button>
+                </td>
+            </tr>
+        </form>
+    }
+    </tbody>
+</table>

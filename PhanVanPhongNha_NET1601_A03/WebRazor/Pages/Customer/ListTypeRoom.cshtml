@@ -1,0 +1,107 @@
+@page
+@model ListTypeRoomModel
+
+@{
+    var permission = HttpContext.Session.GetString("account");
+    if (permission == null)
+    {
+        Response.Redirect("../Index");
+        return;
+    }
+
+    ViewData["Title"] = "ListTypeRoom";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<h1>ListTypeRoom</h1>
+<table class="table table-sm  table-striped table-bordered m-2">
+    <thead>
+    <tr>
+        <th>RoomTypeId</th><th>RoomTypeName</th><th>TypeDescription</th><th>TypeNote</th><th>Booking</th>
+    </tr><
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    BookingReservation();
+    
+    function BookingReservation() {
+        $("table tbody").html("");
+        
+        $.ajax({
+            url: "https://localhost:7098/api/RoomType/GetRoomTypes",
+            type: "get",
+            contentType: "application/json",
+            success: function (result, status, xhr) {
+                console.log("Dữ liệu từ API:", result);
+                $("tbody").html("");
+                $.each(result, function (index, value) {
+                    $("tbody").append($("<tr>"));
+                    var appendElement = $("tbody tr").last();
+                    
+                    // Kiểm tra và thêm giá trị vào từng cột
+                    appendValueToColumn(appendElement, value["roomTypeId"]);
+                    appendValueToColumn(appendElement, value["roomTypeName"]);
+                    appendValueToColumn(appendElement, value["typeDescription"]);
+                    appendValueToColumn(appendElement, value["typeNote"]);
+                    
+                    // Thêm giá trị cho cột "Booking"
+                    var bookingLink = "<a href='/BookingRoom/" + value["id"] + "'>Book Now</a>";
+                    appendValueToColumn(appendElement, bookingLink);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr)
+            }
+        });
+    }
+    
+    // Hàm để thêm giá trị vào cột, kiểm tra xem giá trị có tồn tại không
+    function appendValueToColumn(element, value) {
+        if (value) {
+            element.append($("<td>").html(value));
+        } else {
+            element.append($("<td>").html("-")); // hoặc bất kỳ dấu nào để chỉ ra ô trống
+        }
+    }
+});
+</script>
+
+
+@*<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomType[0].RoomTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomType[0].TypeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomType[0].TypeNote)
+        </th>
+        <th> Booking </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.RoomType)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeNote)
+            </td>
+            <td>
+                <a asp-page="./BookingRoom" asp-route-id="@item.RoomTypeId">Booking</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>*@

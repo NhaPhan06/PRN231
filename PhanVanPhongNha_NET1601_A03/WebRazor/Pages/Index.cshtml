@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    Layout = "Shared/_Layout";
+}
+<div class="row">
+    <div class="row-cols-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label class="control-label" for="email">Email</label>
+                <input class="form-control" name="email" asp-for="LoginRequest.Email" type="email" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="password">Password</label>
+                <input class="form-control" name="password" asp-for="LoginRequest.Password" type="password" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Login" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./CreateAccount">Create Account</a>
+</div>
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <div class="row">
+        <p class="text-danger">@ViewData["ErrorMessage"]</p>
+    </div>
+}
