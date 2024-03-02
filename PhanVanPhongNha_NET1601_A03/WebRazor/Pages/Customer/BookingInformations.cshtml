@@ -15,6 +15,65 @@
 
 <h1>BookingInformations</h1>
 
+
+@*
+<table class="table table-sm  table-striped table-bordered m-2">
+    <thead>
+    <tr>
+        <th>BookingReservationId</th><th>CustomerId</th><th>BookingDate</th><th>TotalPrice</th><th>Status</th><th></th><th></th>
+    </tr><
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    BookingReservation();
+    
+    function BookingReservation() {
+        $("table tbody").html("");
+        
+        $.ajax({
+            url: "https://localhost:7098/api/RoomType/GetRoomTypes",
+            type: "get",
+            contentType: "application/json",
+            success: function (result, status, xhr) {
+                console.log("Dữ liệu từ API:", result);
+                $("tbody").html("");
+                $.each(result, function (index, value) {
+                    $("tbody").append($("<tr>"));
+                    var appendElement = $("tbody tr").last();
+                    
+                    // Kiểm tra và thêm giá trị vào từng cột
+                    appendValueToColumn(appendElement, value["roomTypeId"]);
+                    appendValueToColumn(appendElement, value["roomTypeName"]);
+                    appendValueToColumn(appendElement, value["typeDescription"]);
+                    appendValueToColumn(appendElement, value["typeNote"]);
+                    
+                    // Thêm giá trị cho cột "Booking"
+                    var bookingLink = "<a href='/BookingRoom/" + value["id"] + "'>Book Now</a>";
+                    appendValueToColumn(appendElement, bookingLink);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr)
+            }
+        });
+    }
+    
+    // Hàm để thêm giá trị vào cột, kiểm tra xem giá trị có tồn tại không
+    function appendValueToColumn(element, value) {
+        if (value) {
+            element.append($("<td>").html(value));
+        } else {
+            element.append($("<td>").html("-")); // hoặc bất kỳ dấu nào để chỉ ra ô trống
+        }
+    }
+});
+</script>
+*@
+
+
 <table class="table">
     <thead>
     <tr>

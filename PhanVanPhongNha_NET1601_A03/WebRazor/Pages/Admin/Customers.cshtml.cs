@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -12,6 +13,8 @@ namespace WebRazor.Pages.Admin
 
         public async Task OnGetAsync()
         {
+            var accessToken = HttpContext.Session.GetString("account");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var response = await _client.GetAsync("https://localhost:7098/api/Customer/GetCustomers");
 
             if (response.IsSuccessStatusCode)
@@ -23,6 +26,8 @@ namespace WebRazor.Pages.Admin
         
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            var accessToken = HttpContext.Session.GetString("account");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var response = await _client.DeleteAsync($"https://localhost:7098/api/Customer/DeleteCustomer/{id}");
             return RedirectToPage("./Customers");
         }

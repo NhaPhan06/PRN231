@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 using BussinessLogic.IService;
 using DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using ModelsLayer.BusinessObjects;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Microsoft.AspNetCore.Mvc.Route("api/[controller]/[action]")]
     [ApiController]
     public class BookingDetailController : ControllerBase

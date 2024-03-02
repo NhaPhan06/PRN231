@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ModelsLayer.BusinessObjects;
 using Newtonsoft.Json;
@@ -11,6 +12,8 @@ public class ListTypeRoomModel : PageModel
 
     public async Task OnGetAsync()
     {
+        var accessToken = HttpContext.Session.GetString("account");
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         var list = await _client.GetAsync("https://localhost:7098/api/RoomType/GetRoomTypes");
         if (list.IsSuccessStatusCode)
         {

@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using ModelsLayer.BusinessObjects;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class RoomTypeController : ControllerBase

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,7 +19,9 @@ namespace WebRazor.Pages.Admin
         public IList<RoomResponse> RoomInformation { get;set; } = default!;
 
         public async Task OnGetAsync()
-        {
+        {            
+            var accessToken = HttpContext.Session.GetString("account");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var response = await _client.GetAsync("https://localhost:7098/api/RoomInformation/GetRoomInformations");
             if (response.IsSuccessStatusCode)
             {
@@ -29,6 +32,8 @@ namespace WebRazor.Pages.Admin
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            var accessToken = HttpContext.Session.GetString("account");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var response = await _client.DeleteAsync($"https://localhost:7098/api/RoomInformation/DeleteRoomInformation/{id}");
             return RedirectToPage("./RoomInformations");
         }

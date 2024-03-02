@@ -14,7 +14,7 @@
 }
 
 <h1>ListTypeRoom</h1>
-<table class="table table-sm  table-striped table-bordered m-2">
+@*<table class="table table-sm  table-striped table-bordered m-2">
     <thead>
     <tr>
         <th>RoomTypeId</th><th>RoomTypeName</th><th>TypeDescription</th><th>TypeNote</th><th>Booking</th>
@@ -46,9 +46,8 @@ $(document).ready(function () {
                     appendValueToColumn(appendElement, value["roomTypeName"]);
                     appendValueToColumn(appendElement, value["typeDescription"]);
                     appendValueToColumn(appendElement, value["typeNote"]);
-                    
                     // Thêm giá trị cho cột "Booking"
-                    var bookingLink = "<a href='/BookingRoom/" + value["id"] + "'>Book Now</a>";
+                    var bookingLink = "<a href='\BookingRoom.cshtml?id=" + value["id"] + "'>Book Now</a>";
                     appendValueToColumn(appendElement, bookingLink);
                 });
             },
@@ -67,10 +66,10 @@ $(document).ready(function () {
         }
     }
 });
-</script>
+</script>*@
 
 
-@*<table class="table">
+<table class="table">
     <thead>
     <tr>
         <th>
@@ -104,4 +103,4 @@ $(document).ready(function () {
         </tr>
     }
     </tbody>
-</table>*@
+</table>

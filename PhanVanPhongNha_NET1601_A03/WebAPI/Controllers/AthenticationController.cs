@@ -7,6 +7,7 @@ using BussinessLogic.IService;
 using BussinessLogic.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ModelsLayer.DTOS.Response;
 
 namespace WebAPI.Controllers
 {
@@ -22,14 +23,22 @@ namespace WebAPI.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<String>> Login(LoginRequest request)
+        public async Task<ActionResult<LoginRespone>> Login(LoginRequest request)
         {
-            var result  = await _authenticationService.Login(request);
-            if (result == null)
+            var result  = await _authenticationService.Validate(request);
+            if (result.Data == null)
             {
                 return NotFound();
             }
             return Ok(result);
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult<Boolean>> Logout(Guid AccountId)
+        {
+            var user = _authenticationService.Logout(AccountId);
+            //cấp token
+            return Ok(user);
         }
     }
 }

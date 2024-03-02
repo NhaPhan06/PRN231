@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,6 +21,9 @@ namespace WebRazor.Pages.Admin
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var accessToken = HttpContext.Session.GetString("account");
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var types = await _client.GetAsync($"https://localhost:7098/api/RoomType/GetRoomTypes");
             if (types.IsSuccessStatusCode)
             {
@@ -44,6 +48,9 @@ namespace WebRazor.Pages.Admin
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            var accessToken = HttpContext.Session.GetString("account");
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             if (!ModelState.IsValid)
             {
                 return Page();

@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,6 +20,8 @@ namespace WebRazor.Pages.Admin
 
         public async Task<IActionResult> OnGet()
         {
+            var accessToken = HttpContext.Session.GetString("account");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var types = await _client.GetAsync($"https://localhost:7098/api/RoomType/GetRoomTypes");
             if (types.IsSuccessStatusCode)
             {
@@ -31,6 +34,8 @@ namespace WebRazor.Pages.Admin
         }
         public async Task<IActionResult> OnPostAsync()
         {
+            var accessToken = HttpContext.Session.GetString("account");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var json = JsonSerializer.Serialize(RoomInformation);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = _client.PostAsync("https://localhost:7098/api/RoomInformation/CreateRoomInformation", content).Result;
